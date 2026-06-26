@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap");
+
 :root {
   --ink: #0e1734;
   --ink-2: #1b2032;
@@ -9,10 +11,12 @@
   --orange: #ef7d42;
   --orange-dark: #d9652d;
   --shadow: 0 24px 60px rgba(13, 19, 42, 0.16);
-  --container: min(100% - 40px, 1440px);
+  --container: min(100% - 40px, 1300px);
   --container-narrow: min(100% - 40px, 1120px);
   --radius: 6px;
   --ease: cubic-bezier(0.2, 0.75, 0.28, 1);
+  --font-heading: "Archivo", sans-serif;
+  --font-body: "Manrope", sans-serif;
 }
 
 * {
@@ -28,7 +32,7 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
   line-height: 1.6;
   overflow-x: hidden;
 }
@@ -74,6 +78,7 @@ select {
 }
 
 .eyebrow {
+  font-family: var(--font-heading);
   color: var(--orange);
   font-size: 0.82rem;
   font-weight: 800;
@@ -82,9 +87,10 @@ select {
 }
 
 .section-title {
+  font-family: var(--font-heading);
   margin: 12px 0 0;
-  font-size: clamp(2rem, 4vw, 4.1rem);
-  line-height: 1.08;
+  font-size: clamp(1.85rem, 3.2vw, 3.35rem);
+  line-height: 1.12;
   letter-spacing: 0;
 }
 
@@ -112,6 +118,7 @@ select {
 }
 
 .btn {
+  font-family: var(--font-body);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -142,6 +149,13 @@ select {
   box-shadow: 0 12px 22px rgba(14, 23, 52, 0.22);
 }
 
+.btn svg {
+  width: 1.05em;
+  height: 1.05em;
+  flex: 0 0 auto;
+  stroke-width: 2.5;
+}
+
 .icon {
   width: 1.1em;
   height: 1.1em;
@@ -158,7 +172,7 @@ select {
 
 .site-header.is-scrolled,
 .site-header.header-solid {
-  background: rgba(35, 36, 47, 0.96);
+  background: #262832;
   box-shadow: 0 16px 42px rgba(0, 0, 0, 0.18);
 }
 
@@ -189,12 +203,14 @@ select {
 }
 
 .brand {
+  font-family: var(--font-heading);
   display: inline-flex;
   align-items: center;
   gap: 12px;
   font-size: clamp(1.35rem, 2vw, 1.85rem);
   font-weight: 900;
   line-height: 1;
+  white-space: nowrap;
 }
 
 .brand-mark {
@@ -234,6 +250,7 @@ select {
 }
 
 .menu {
+  font-family: var(--font-heading);
   display: flex;
   align-items: center;
   gap: 30px;
@@ -286,12 +303,12 @@ select {
 
 .hero {
   position: relative;
-  min-height: 100svh;
-  display: grid;
-  align-items: center;
+  min-height: clamp(720px, 100svh, 880px);
+  display: flex;
+  align-items: stretch;
   overflow: hidden;
   color: var(--white);
-  background: #242631;
+  background: #152517;
 }
 
 .hero::before,
@@ -304,74 +321,110 @@ select {
 }
 
 .hero::before {
-  background-image: linear-gradient(90deg, rgba(22, 23, 33, 0.9), rgba(31, 33, 45, 0.66) 45%, rgba(31, 33, 45, 0.2)), url("../images/hero.webp");
+  background-image:
+    linear-gradient(90deg, rgba(8, 29, 18, 0.9), rgba(18, 39, 25, 0.72) 46%, rgba(23, 32, 26, 0.46)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.32)),
+    url("../images/hero.webp");
   animation: kenburns 13s ease-in-out infinite alternate;
 }
 
 .hero::after {
-  background-image: linear-gradient(90deg, rgba(22, 23, 33, 0.86), rgba(31, 33, 45, 0.72) 48%, rgba(31, 33, 45, 0.24)), url("../images/roof-replacement.webp");
-  opacity: 0;
-  animation: heroFade 10s ease-in-out infinite;
+  background: rgba(3, 22, 13, 0.22);
+  opacity: 1;
+  animation: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 40px, 1390px);
+  margin: 0 auto;
+  padding: clamp(118px, 15vh, 146px) 0 54px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(48px, 8vh, 78px);
 }
 
 .hero-content {
   position: relative;
   z-index: 1;
-  width: var(--container);
-  margin: 0 auto;
-  padding: 170px 0 170px;
+  width: min(920px, 100%);
+  margin-left: clamp(0px, 4vw, 112px);
+  padding: 0;
 }
 
 .hero h1 {
-  max-width: 760px;
-  margin: 22px 0 20px;
-  font-size: clamp(2.6rem, 6.2vw, 6.6rem);
-  line-height: 1.02;
-  letter-spacing: 0;
+  font-family: var(--font-heading);
+  max-width: 980px;
+  margin: 0;
+  font-size: clamp(3.55rem, 4vw, 4.75rem);
+  line-height: 1.34;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .hero p {
-  max-width: 660px;
-  margin: 0 0 32px;
+  max-width: 390px;
+  margin: 0;
   color: rgba(255, 255, 255, 0.9);
-  font-size: clamp(1rem, 1.6vw, 1.18rem);
-  font-weight: 700;
+  font-size: clamp(0.98rem, 1.2vw, 1.12rem);
+  font-weight: 600;
+  line-height: 1.45;
 }
 
-.hero-actions {
+.hero-lead {
   display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+  align-items: center;
+  gap: 22px;
+  margin-top: 18px;
 }
 
-.hero-stat {
-  position: absolute;
-  right: max(24px, calc((100vw - 1440px) / 2));
-  bottom: 72px;
-  z-index: 2;
-  max-width: 310px;
-  padding: 26px;
-  background: rgba(14, 23, 52, 0.82);
-  border-left: 4px solid var(--orange);
-  backdrop-filter: blur(10px);
+.hero-lead .btn {
+  min-height: 46px;
+  padding: 12px 22px;
+  border-radius: 0;
 }
 
-.hero-stat strong {
+.hero-proof-row {
   display: block;
-  font-size: 2.1rem;
-  line-height: 1;
+  margin-left: clamp(0px, 4vw, 112px);
 }
 
-.hero-stat span {
+.hero-proof-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  max-width: 890px;
+}
+
+.hero-proof-card {
+  padding-bottom: 22px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.hero-proof-card span {
   display: block;
-  margin-top: 8px;
-  color: rgba(255, 255, 255, 0.82);
+  margin-bottom: 22px;
+  font-weight: 900;
+  font-size: 1.08rem;
+}
+
+.hero-proof-card h2 {
+  font-family: var(--font-heading);
+  max-width: 280px;
+  margin: 0;
+  font-size: clamp(0.9rem, 1vw, 1.04rem);
+  line-height: 1.25;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .estimate-wrap {
   position: relative;
   z-index: 3;
-  margin-top: -72px;
+  margin-top: 0;
 }
 
 .estimate-panel {
@@ -449,6 +502,12 @@ select {
   font-weight: 800;
 }
 
+.form-note {
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 .section {
   padding: clamp(76px, 9vw, 138px) 0;
 }
@@ -458,6 +517,66 @@ select {
   grid-template-columns: minmax(0, 0.98fr) minmax(0, 1.02fr);
   gap: clamp(36px, 6vw, 86px);
   align-items: center;
+}
+
+.network-section {
+  background: #ebeced;
+}
+
+.network-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.72fr);
+  gap: clamp(30px, 5vw, 72px);
+  align-items: stretch;
+}
+
+.network-copy {
+  align-self: center;
+}
+
+.network-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 36px;
+}
+
+.network-stats div {
+  padding: 24px;
+  background: var(--white);
+  border-left: 4px solid var(--orange);
+}
+
+.network-stats strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: clamp(2.2rem, 4vw, 4.2rem);
+  line-height: 1;
+}
+
+.network-stats span {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.routing-card {
+  padding: clamp(30px, 4vw, 50px);
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.routing-card h2,
+.routing-card h3 {
+  margin: 10px 0 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.55rem, 2.4vw, 2.45rem);
+  line-height: 1.12;
+}
+
+.provider-fit {
+  background: #f7f7f8;
 }
 
 .image-stack {
@@ -559,6 +678,10 @@ select {
   gap: 24px;
 }
 
+.service-section {
+  background: linear-gradient(180deg, #f8f8f9 0%, #ffffff 100%);
+}
+
 .process-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-top: 58px;
@@ -590,28 +713,73 @@ select {
 
 .service-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: 56px;
+  gap: clamp(22px, 2.4vw, 32px);
+  margin-top: 54px;
+  scroll-margin-top: 170px;
+}
+
+.service-grid [data-reveal] {
+  opacity: 1;
+  transform: none;
 }
 
 .service-card {
+  position: relative;
   background: var(--white);
   overflow: hidden;
+  border: 1px solid rgba(14, 23, 52, 0.1);
+  border-radius: 10px;
   min-width: 0;
-  transition: transform 260ms var(--ease), box-shadow 260ms var(--ease);
+  box-shadow: 0 18px 46px rgba(14, 23, 52, 0.08);
+  transition: transform 260ms var(--ease), box-shadow 260ms var(--ease), border-color 260ms var(--ease);
 }
 
 .service-card:hover {
-  transform: translateY(-10px);
-  box-shadow: var(--shadow);
+  transform: translateY(-8px);
+  border-color: rgba(239, 125, 66, 0.34);
+  box-shadow: 0 26px 60px rgba(14, 23, 52, 0.14);
+}
+
+.service-card a {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100%;
 }
 
 .service-media {
   position: relative;
-  aspect-ratio: 1.55 / 1;
+  aspect-ratio: 1.72 / 1;
   overflow: hidden;
 }
 
+.service-media::after {
+  content: "";
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: -1px;
+  z-index: 2;
+  height: 52px;
+  background: var(--white);
+  clip-path: polygon(0 48%, 28% 70%, 58% 94%, 100% 28%, 100% 100%, 0 100%);
+}
+
+.service-media::before {
+  content: "";
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: 28px;
+  z-index: 3;
+  height: 3px;
+  background: var(--orange);
+  transform: rotate(-4deg);
+  transform-origin: right center;
+}
+
 .service-media img {
+  position: relative;
+  z-index: 0;
   height: 100%;
   object-fit: cover;
   transition: transform 520ms var(--ease);
@@ -622,30 +790,81 @@ select {
 }
 
 .service-body {
-  padding: 34px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 236px;
+  padding: 44px 30px 30px;
+  text-align: left;
 }
 
 .service-body h3 {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-heading);
   margin: 0 0 12px;
-  font-size: 1.6rem;
-  line-height: 1.15;
+  max-width: 270px;
+  font-size: clamp(1.18rem, 1.45vw, 1.4rem);
+  line-height: 1.18;
 }
 
 .service-body p {
+  position: relative;
+  z-index: 1;
+  max-width: 310px;
   color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
 }
 
 .text-link {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-top: 8px;
+  margin-top: auto;
+  padding-top: 16px;
   color: var(--orange);
   font-weight: 900;
 }
 
 .text-link:hover {
   color: var(--orange-dark);
+}
+
+.service-icon {
+  position: absolute;
+  left: 30px;
+  top: -42px;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border: 5px solid var(--white);
+  border-radius: 50%;
+  background: var(--orange);
+  color: var(--white);
+  box-shadow: 0 12px 24px rgba(239, 125, 66, 0.26);
+}
+
+.service-icon svg {
+  width: 34px;
+  height: 34px;
+  stroke-width: 2.2;
+}
+
+.service-number {
+  position: absolute;
+  right: 28px;
+  top: 28px;
+  z-index: 0;
+  color: rgba(14, 23, 52, 0.08);
+  font-family: var(--font-heading);
+  font-size: clamp(3.4rem, 5vw, 4.2rem);
+  line-height: 1;
+  font-weight: 800;
 }
 
 .cta-band {
@@ -714,9 +933,10 @@ select {
 }
 
 .project-content h3 {
+  font-family: var(--font-heading);
   margin: 8px 0 0;
-  font-size: clamp(1.5rem, 2.5vw, 2.4rem);
-  line-height: 1.12;
+  font-size: clamp(1.25rem, 2vw, 2rem);
+  line-height: 1.16;
 }
 
 .floating-icon {
@@ -748,10 +968,11 @@ select {
 }
 
 .page-hero h1 {
+  font-family: var(--font-heading);
   max-width: 980px;
   margin: 14px 0 0;
-  font-size: clamp(2.6rem, 6vw, 6rem);
-  line-height: 1.02;
+  font-size: clamp(2.25rem, 5vw, 4.85rem);
+  line-height: 1.08;
 }
 
 .breadcrumb {
@@ -770,11 +991,12 @@ select {
 
 .content-panel h2,
 .content-panel h3 {
+  font-family: var(--font-heading);
   line-height: 1.12;
 }
 
 .content-panel h2 {
-  font-size: clamp(2rem, 4vw, 3.8rem);
+  font-size: clamp(1.75rem, 3.2vw, 3.05rem);
 }
 
 .rich-list {
@@ -868,6 +1090,7 @@ select {
 }
 
 .footer-main h3 {
+  font-family: var(--font-heading);
   margin: 0 0 18px;
 }
 
@@ -888,6 +1111,14 @@ select {
   color: rgba(255, 255, 255, 0.76);
   padding: 22px 0;
   font-size: 0.9rem;
+}
+
+.site-disclaimer {
+  max-width: 1180px;
+  margin: 14px 0 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.78rem;
+  line-height: 1.55;
 }
 
 [data-reveal] {
@@ -912,6 +1143,11 @@ select {
 [data-reveal].is-visible {
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
+}
+
+.hero [data-reveal] {
+  opacity: 1;
+  transform: none;
 }
 
 @keyframes kenburns {
@@ -983,6 +1219,7 @@ select {
 
   .estimate-panel,
   .split,
+  .network-layout,
   .detail-grid,
   .contact-grid,
   .footer-main {
@@ -1007,6 +1244,18 @@ select {
   .sidebar-card {
     position: static;
   }
+
+  .hero-inner {
+    width: var(--container);
+    padding-top: 128px;
+    gap: 58px;
+  }
+
+  .hero-content,
+  .hero-proof-row {
+    margin-left: 0;
+  }
+
 }
 
 @media (max-width: 720px) {
@@ -1020,29 +1269,52 @@ select {
   }
 
   .brand-mark {
-    width: 36px;
-    height: 32px;
+    width: 34px;
+    height: 30px;
+  }
+
+  .brand {
+    gap: 8px;
+    font-size: clamp(1.06rem, 5vw, 1.28rem);
   }
 
   .hero {
-    min-height: 720px;
+    min-height: auto;
+  }
+
+  .hero-inner {
+    padding: 118px 0 54px;
+    gap: 42px;
   }
 
   .hero-content {
-    padding: 130px 0 140px;
+    width: 100%;
+    padding: 0;
   }
 
   .hero h1 {
     max-width: 100%;
-    font-size: clamp(2.35rem, 14vw, 4rem);
+    font-size: clamp(2.35rem, 11vw, 3.2rem);
+    line-height: 1.18;
+    white-space: normal;
   }
 
-  .hero-stat {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    width: var(--container);
-    margin: -118px auto 38px;
+  .hero-lead {
+    display: grid;
+    gap: 16px;
+  }
+
+  .hero-proof-list {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .hero-proof-card {
+    padding-bottom: 16px;
+  }
+
+  .hero-proof-card span {
+    margin-bottom: 10px;
   }
 
   .estimate-wrap {
@@ -1054,6 +1326,7 @@ select {
   .service-grid,
   .values-grid,
   .policy-grid,
+  .network-stats,
   .check-grid {
     grid-template-columns: 1fr;
   }
@@ -1092,15 +1365,26 @@ select {
     width: 100%;
   }
 
-  .hero-actions {
-    width: 100%;
-  }
-
   .service-body,
   .content-panel,
   .contact-card,
   .value-card,
   .process-card {
     padding: 26px;
+  }
+
+  .service-body {
+    padding-top: 42px;
+  }
+
+  .service-icon {
+    left: 26px;
+    width: 64px;
+    height: 64px;
+  }
+
+  .service-icon svg {
+    width: 30px;
+    height: 30px;
   }
 }

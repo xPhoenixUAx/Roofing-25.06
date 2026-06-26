@@ -14,7 +14,7 @@
     });
   }
 
-  setText("[data-company]", config.companyName || "IronPeak Roofing Co.");
+  setText("[data-company]", config.companyName || "RoofLink Roofing Network");
   setText("[data-email]", config.email || "");
   setText("[data-website]", config.website || "");
   setText("[data-phone]", config.phone || "");
@@ -24,7 +24,8 @@
   setText("[data-hours]", config.businessHours || "");
   setText("[data-footer-text]", config.footerText || "");
   setText("[data-copyright]", config.copyright || "");
-  setText("[data-footer-company-line]", `${config.companyName || "IronPeak Roofing Co."} - ${config.address || ""} - ID ${config.companyId || ""}`);
+  setText("[data-disclaimer]", config.disclaimer || "");
+  setText("[data-footer-company-line]", `${config.companyName || "RoofLink Roofing Network"} - ${config.address || ""} - ID ${config.companyId || ""}`);
   setHref("[data-phone-href]", `tel:${(config.phone || "").replace(/[^\d+]/g, "")}`);
   setHref("[data-email-href]", `mailto:${config.email || ""}`);
   setHref("[data-website-href]", `https://${config.website || ""}`);
@@ -67,7 +68,7 @@
       event.preventDefault();
       const message = form.querySelector(".form-success");
       if (message) {
-        message.textContent = `Thanks. ${config.companyName || "Our team"} received your request and will reply from ${config.email || "our office email"}.`;
+        message.textContent = `Thanks. ${config.companyName || "The request network"} received your request and will reply from ${config.email || "the platform email"}.`;
         message.hidden = false;
       }
       form.reset();
@@ -77,8 +78,22 @@
   const year = document.querySelector("[data-year]");
   if (year) year.textContent = new Date().getFullYear();
 
+  document.querySelectorAll(".footer-bottom .container").forEach((container) => {
+    if (!container.querySelector("[data-disclaimer]") && config.disclaimer) {
+      const disclaimer = document.createElement("p");
+      disclaimer.className = "site-disclaimer";
+      disclaimer.dataset.disclaimer = "";
+      disclaimer.textContent = config.disclaimer;
+      container.appendChild(disclaimer);
+    }
+  });
+
   document.querySelectorAll("[data-root-link]").forEach((link) => {
     const target = link.getAttribute("data-root-link");
     link.setAttribute("href", `${root}${target}`);
   });
+
+  if (window.lucide && typeof window.lucide.createIcons === "function") {
+    window.lucide.createIcons();
+  }
 })();
