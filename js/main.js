@@ -63,16 +63,122 @@
     revealItems.forEach((item) => item.classList.add("is-visible"));
   }
 
+  function openModal(modal) {
+    if (!modal) return;
+    modal.hidden = false;
+    document.body.classList.add("modal-open");
+    const closeButton = modal.querySelector("button[data-modal-close]");
+    if (closeButton) closeButton.focus();
+  }
+
+  function closeModal(modal) {
+    if (!modal) return;
+    modal.hidden = true;
+    document.body.classList.remove("modal-open");
+  }
+
+  document.querySelectorAll("[data-modal-close]").forEach((button) => {
+    button.addEventListener("click", () => {
+      closeModal(button.closest(".form-modal"));
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      document.querySelectorAll(".form-modal:not([hidden])").forEach(closeModal);
+    }
+  });
+
   document.querySelectorAll(".roof-form").forEach((form) => {
     form.addEventListener("submit", (event) => {
       event.preventDefault();
       const message = form.querySelector(".form-success");
+      const submitButton = form.querySelector('[type="submit"]');
+
+      if (form.dataset.asyncHandler) {
+        const endpoint = form.getAttribute("action");
+        if (!endpoint) return;
+
+        if (message) {
+          message.hidden = true;
+          message.textContent = "";
+          message.classList.remove("is-error");
+        }
+        if (submitButton) {
+          submitButton.disabled = true;
+          submitButton.dataset.originalText = submitButton.textContent || "";
+          submitButton.textContent = "Sending...";
+        }
+
+        fetch(endpoint, {
+          method: form.getAttribute("method") || "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" },
+        })
+          .then(async (response) => {
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok || data.ok === false) {
+              throw new Error(data.message || "The request could not be sent. Please try again.");
+            }
+            form.reset();
+            openModal(document.querySelector("#contact-success-modal"));
+          })
+          .catch((error) => {
+            if (message) {
+              message.textContent = error.message;
+              message.classList.add("is-error");
+              message.hidden = false;
+            }
+          })
+          .finally(() => {
+            if (submitButton) {
+              submitButton.disabled = false;
+              submitButton.textContent = submitButton.dataset.originalText || "Send message";
+            }
+          });
+        return;
+      }
+
       if (message) {
         message.textContent = `Thanks. ${config.companyName || "The request network"} received your request and will reply from ${config.email || "the platform email"}.`;
+        message.classList.remove("is-error");
         message.hidden = false;
       }
       form.reset();
     });
+  });
+
+  document.querySelectorAll("[data-accordion]").forEach((accordion) => {
+    const items = Array.from(accordion.querySelectorAll("article"));
+
+    function setItem(item, open) {
+      const button = item.querySelector("button[aria-expanded]");
+      const answer = item.querySelector(".faq-answer");
+      if (!button || !answer) return;
+
+      item.classList.toggle("is-open", open);
+      button.setAttribute("aria-expanded", String(open));
+      answer.style.height = open ? `${answer.scrollHeight}px` : "0px";
+    }
+
+    items.forEach((item) => {
+      const button = item.querySelector("button[aria-expanded]");
+      const answer = item.querySelector(".faq-answer");
+      if (!button || !answer) return;
+
+      setItem(item, item.classList.contains("is-open"));
+
+      button.addEventListener("click", () => {
+        const shouldOpen = button.getAttribute("aria-expanded") !== "true";
+        items.forEach((otherItem) => setItem(otherItem, shouldOpen && otherItem === item));
+      });
+    });
+
+    window.addEventListener("resize", () => {
+      items.forEach((item) => {
+        if (item.classList.contains("is-open")) setItem(item, true);
+      });
+    }, { passive: true });
   });
 
   const year = document.querySelector("[data-year]");
