@@ -30,14 +30,31 @@
   setHref("[data-email-href]", `mailto:${config.email || ""}`);
   setHref("[data-website-href]", `https://${config.website || ""}`);
 
+  document.querySelectorAll(".brand [data-company]").forEach((node) => {
+    node.classList.add("brand-text");
+    node.innerHTML = '<span class="brand-name"><span>Roof</span><span class="brand-link">Link</span></span><span class="brand-tagline">Roofing Network</span>';
+  });
+
   const navToggle = document.querySelector(".nav-toggle");
   const navPanel = document.querySelector(".nav-panel");
   if (navToggle && navPanel) {
+    const setNavOpen = (open) => {
+      navToggle.setAttribute("aria-expanded", String(open));
+      navPanel.classList.toggle("is-open", open);
+      document.body.classList.toggle("nav-open", open);
+    };
+
     navToggle.addEventListener("click", () => {
       const expanded = navToggle.getAttribute("aria-expanded") === "true";
-      navToggle.setAttribute("aria-expanded", String(!expanded));
-      navPanel.classList.toggle("is-open");
-      document.body.classList.toggle("nav-open");
+      setNavOpen(!expanded);
+    });
+
+    navPanel.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setNavOpen(false));
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") setNavOpen(false);
     });
   }
 
@@ -193,6 +210,23 @@
       container.appendChild(disclaimer);
     }
   });
+
+  if (config.phone && !document.querySelector(".floating-cta")) {
+    const floatingCta = document.createElement("a");
+    floatingCta.className = "floating-cta";
+    floatingCta.href = `tel:${(config.phone || "").replace(/[^\d+]/g, "")}`;
+    floatingCta.setAttribute("aria-label", `Call ${config.companyName || "RoofLink"}`);
+    floatingCta.innerHTML = '<i data-lucide="phone-call" aria-hidden="true"></i><span>Call</span>';
+    document.body.appendChild(floatingCta);
+    document.body.classList.add("has-floating-cta");
+
+    const syncFloatingCta = () => {
+      floatingCta.classList.toggle("is-visible", window.scrollY > 48);
+    };
+
+    syncFloatingCta();
+    window.addEventListener("scroll", syncFloatingCta, { passive: true });
+  }
 
   document.querySelectorAll("[data-root-link]").forEach((link) => {
     const target = link.getAttribute("data-root-link");
