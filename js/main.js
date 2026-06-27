@@ -35,6 +35,10 @@
     node.innerHTML = '<span class="brand-name"><span>Roof</span><span class="brand-link">Link</span></span><span class="brand-tagline">Roofing Network</span>';
   });
 
+  document.querySelectorAll(".brand-mark").forEach((mark) => {
+    mark.innerHTML = '<i data-lucide="house" aria-hidden="true"></i>';
+  });
+
   const navToggle = document.querySelector(".nav-toggle");
   const navPanel = document.querySelector(".nav-panel");
   if (navToggle && navPanel) {
@@ -64,6 +68,19 @@
   }
   syncHeader();
   window.addEventListener("scroll", syncHeader, { passive: true });
+
+  document.querySelectorAll(".estimate-panel").forEach((panel) => {
+    const toggle = panel.querySelector(".estimate-toggle");
+    const form = panel.querySelector(".estimate-form");
+    if (!toggle || !form) return;
+
+    toggle.addEventListener("click", () => {
+      const open = toggle.getAttribute("aria-expanded") !== "true";
+      toggle.setAttribute("aria-expanded", String(open));
+      panel.classList.toggle("is-form-open", open);
+      window.dispatchEvent(new Event("resize"));
+    });
+  });
 
   const revealItems = document.querySelectorAll("[data-reveal]");
   if ("IntersectionObserver" in window) {
@@ -221,11 +238,16 @@
     document.body.classList.add("has-floating-cta");
 
     const syncFloatingCta = () => {
-      floatingCta.classList.toggle("is-visible", window.scrollY > 48);
+      const formInView = Array.from(document.querySelectorAll(".roof-form")).some((form) => {
+        const rect = form.getBoundingClientRect();
+        return rect.top < window.innerHeight - 90 && rect.bottom > 90;
+      });
+      floatingCta.classList.toggle("is-visible", window.scrollY > 48 && !formInView);
     };
 
     syncFloatingCta();
     window.addEventListener("scroll", syncFloatingCta, { passive: true });
+    window.addEventListener("resize", syncFloatingCta, { passive: true });
   }
 
   document.querySelectorAll("[data-root-link]").forEach((link) => {

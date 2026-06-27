@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RoofLink Roofing Network | Compare Local Roofing Providers</title>
   <meta name="description" content="RoofLink Roofing Network helps homeowners and property managers submit roofing requests and compare responses from independent local providers for repairs, replacement, inspections, gutters, storm damage, and commercial roofing.">
-  <link rel="icon" href="data:,">
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
@@ -71,7 +71,11 @@
           <div class="accent-line"></div>
           <p>Share the basics once. We help route your request toward independent roofing providers that match service type, location, urgency, and property needs.</p>
         </div>
-        <form class="estimate-form roof-form">
+        <button class="estimate-toggle" type="button" aria-expanded="false" aria-controls="home-estimate-form">
+          <span>Start your request</span>
+          <i data-lucide="chevron-down" aria-hidden="true"></i>
+        </button>
+        <form class="estimate-form roof-form" id="home-estimate-form">
           <div class="form-grid">
             <div class="field">
               <label for="home-name">Your name</label>
@@ -99,7 +103,7 @@
             <div class="field">
               <label for="home-property">Property type</label>
               <select id="home-property" name="property">
-                <option>Single-family home</option>
+                <option>Single-family</option>
                 <option>Townhome or duplex</option>
                 <option>Rental property</option>
                 <option>Commercial building</option>
@@ -108,7 +112,7 @@
             <div class="field">
               <label for="home-urgency">Timing</label>
               <select id="home-urgency" name="urgency">
-                <option>Emergency or active leak</option>
+                <option>Emergency leak</option>
                 <option>This week</option>
                 <option>This month</option>
                 <option>Planning ahead</option>
@@ -148,11 +152,6 @@
         <figure class="network-photo" data-reveal="right">
           <img src="assets/images/provider-matching.webp" alt="Roofing provider inspecting a shingle roof before a homeowner request is matched">
         </figure>
-        <div class="network-stats" aria-label="RoofLink matching facts">
-          <div><strong>1</strong><span>Request form</span></div>
-          <div><strong>6</strong><span>Roofing categories</span></div>
-          <div><strong>0</strong><span>Obligation to hire</span></div>
-        </div>
         <div class="network-summary">
           <a class="btn network-cta" href="#match-request">Start Your Request <span aria-hidden="true">-&gt;</span></a>
           <p>Describe the problem once. RoofLink routes your request to independent local roofing providers so you can compare replies, ask questions, verify credentials, and decide who to hire.</p>
