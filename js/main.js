@@ -250,6 +250,41 @@
     window.addEventListener("resize", syncFloatingCta, { passive: true });
   }
 
+  const consentKey = "rooflink_cookie_consent";
+  const existingConsent = localStorage.getItem(consentKey);
+  if (!existingConsent && !document.querySelector(".cookie-banner")) {
+    const cookieBanner = document.createElement("aside");
+    cookieBanner.className = "cookie-banner";
+    cookieBanner.setAttribute("aria-label", "Cookie notice");
+    cookieBanner.innerHTML = `
+      <div class="cookie-banner__copy">
+        <span>Cookie notice</span>
+        <p>We use essential site technology to keep forms, security, and preferences working. Optional analytics may help us understand how visitors use this roofing provider-matching site.</p>
+      </div>
+      <div class="cookie-banner__actions">
+        <button class="cookie-btn cookie-btn--ghost" type="button" data-cookie-choice="necessary">Reject optional</button>
+        <a class="cookie-link" href="${root}cookie-policy.html">Cookie Policy</a>
+        <button class="cookie-btn" type="button" data-cookie-choice="accepted">Accept</button>
+      </div>
+    `;
+    document.body.appendChild(cookieBanner);
+    document.body.classList.add("has-cookie-banner");
+
+    requestAnimationFrame(() => cookieBanner.classList.add("is-visible"));
+
+    cookieBanner.querySelectorAll("[data-cookie-choice]").forEach((button) => {
+      button.addEventListener("click", () => {
+        localStorage.setItem(consentKey, JSON.stringify({
+          choice: button.dataset.cookieChoice,
+          savedAt: new Date().toISOString(),
+        }));
+        cookieBanner.classList.remove("is-visible");
+        document.body.classList.remove("has-cookie-banner");
+        cookieBanner.addEventListener("transitionend", () => cookieBanner.remove(), { once: true });
+      });
+    });
+  }
+
   document.querySelectorAll("[data-root-link]").forEach((link) => {
     const target = link.getAttribute("data-root-link");
     link.setAttribute("href", `${root}${target}`);

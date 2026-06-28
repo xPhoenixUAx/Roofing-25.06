@@ -219,6 +219,93 @@ body.nav-open .floating-cta {
   transform: translate3d(0, 24px, 0) scale(0.96);
 }
 
+.cookie-banner {
+  position: fixed;
+  left: max(20px, calc((100vw - 1440px) / 2 + 24px));
+  bottom: max(22px, env(safe-area-inset-bottom));
+  z-index: 66;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 20px;
+  align-items: center;
+  width: min(760px, calc(100vw - 40px));
+  padding: 18px;
+  color: var(--white);
+  background: rgba(7, 20, 47, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  box-shadow: 0 24px 70px rgba(7, 20, 47, 0.32);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(18px);
+  transition:
+    opacity 260ms var(--ease),
+    transform 320ms var(--ease);
+}
+
+.cookie-banner.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.cookie-banner__copy span {
+  display: block;
+  color: var(--orange);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.cookie-banner__copy p {
+  margin: 6px 0 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.cookie-banner__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cookie-btn,
+.cookie-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.cookie-btn {
+  color: var(--white);
+  background: var(--orange);
+}
+
+.cookie-btn--ghost,
+.cookie-link {
+  color: rgba(255, 255, 255, 0.86);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.cookie-btn:hover,
+.cookie-btn:focus-visible,
+.cookie-link:hover,
+.cookie-link:focus-visible {
+  transform: translateY(-2px);
+}
+
 .icon {
   width: 1.1em;
   height: 1.1em;
@@ -3333,6 +3420,88 @@ body.nav-open {
     line-height: 1.42;
   }
 
+  .about-page .values-grid {
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .about-page .value-card {
+    min-height: 0;
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .about-page .value-card h3 {
+    margin: 0 0 6px;
+    font-size: 1rem;
+    line-height: 1.14;
+  }
+
+  .about-page .value-card p {
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.42;
+  }
+
+  .service-chooser-section {
+    padding: 48px 0 54px;
+  }
+
+  .service-chooser-layout {
+    gap: 22px;
+  }
+
+  .service-chooser-copy .section-title {
+    font-size: clamp(1.6rem, 8vw, 2.1rem);
+    line-height: 1.08;
+  }
+
+  .service-chooser-copy p {
+    margin: 14px 0 18px;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .service-chooser-copy .btn {
+    min-height: 48px;
+    padding: 12px 20px;
+  }
+
+  .symptom-grid {
+    gap: 10px;
+    border: 0;
+    background: transparent;
+  }
+
+  .symptom-grid article {
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr);
+    column-gap: 12px;
+    row-gap: 4px;
+    min-height: 0;
+    padding: 14px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+
+  .symptom-grid svg {
+    grid-row: 1 / 3;
+    width: 30px;
+    height: 30px;
+  }
+
+  .symptom-grid h3 {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.14;
+  }
+
+  .symptom-grid p {
+    font-size: 0.8rem;
+    line-height: 1.38;
+  }
+
   .contractor-note-main {
     padding-left: 20px;
   }
@@ -3567,6 +3736,44 @@ body.nav-open {
     border-radius: 8px;
   }
 
+  body.has-cookie-banner .floating-cta {
+    bottom: calc(max(14px, env(safe-area-inset-bottom)) + 232px);
+  }
+
+  .cookie-banner {
+    left: 12px;
+    right: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    grid-template-columns: 1fr;
+    gap: 14px;
+    width: auto;
+    padding: 14px;
+    border-radius: 10px;
+  }
+
+  .cookie-banner__copy p {
+    font-size: 0.8rem;
+    line-height: 1.42;
+  }
+
+  .cookie-banner__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .cookie-link {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+
+  .cookie-btn,
+  .cookie-link {
+    min-height: 42px;
+    padding: 9px 12px;
+    font-size: 0.78rem;
+  }
+
   body.has-floating-cta .site-footer {
     padding-bottom: 96px;
   }
@@ -3608,6 +3815,10 @@ body.nav-open {
   .value-card,
   .process-card {
     padding: 26px;
+  }
+
+  .about-page .value-card {
+    padding: 14px;
   }
 
   .process-card {
