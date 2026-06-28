@@ -155,7 +155,7 @@
               throw new Error(data.message || "The request could not be sent. Please try again.");
             }
             form.reset();
-            openModal(document.querySelector("#contact-success-modal"));
+            openModal(document.querySelector(form.dataset.successModal || "#contact-success-modal"));
           })
           .catch((error) => {
             if (message) {

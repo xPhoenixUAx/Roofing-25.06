@@ -24,6 +24,9 @@ if (field('company', 200) !== '') {
 $name = field('name', 160);
 $phone = field('phone', 80);
 $email = field('email', 180);
+$location = field('location', 180);
+$property = field('property', 120);
+$urgency = field('urgency', 120);
 $service = field('service', 120);
 $message = field('message', 2000);
 
@@ -48,6 +51,9 @@ $payload = [
     'name' => $name,
     'phone' => $phone,
     'email' => $email,
+    'location' => $location,
+    'property' => $property,
+    'urgency' => $urgency,
     'service' => $service,
     'message' => $message,
     'ip' => $ipAddress,
@@ -62,21 +68,24 @@ if (!is_dir($storageDir)) {
 $logLine = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . PHP_EOL;
 @file_put_contents($storageDir . DIRECTORY_SEPARATOR . 'contact-submissions.log', $logLine, FILE_APPEND | LOCK_EX);
 
-$to = 'hello@rooflinknetwork.example';
+$to = 'requests@rooflinknetwork.com';
 $subject = 'New roofing provider request';
 $body = "New roofing request\n\n"
     . "Submitted: {$submittedAt}\n"
     . "Name: {$name}\n"
     . "Phone: {$phone}\n"
     . "Email: " . ($email !== '' ? $email : 'Not provided') . "\n"
+    . "Location: " . ($location !== '' ? $location : 'Not provided') . "\n"
+    . "Property type: " . ($property !== '' ? $property : 'Not provided') . "\n"
+    . "Timing: " . ($urgency !== '' ? $urgency : 'Not provided') . "\n"
     . "Service: {$service}\n\n"
     . "Project details:\n{$message}\n\n"
     . "IP: {$ipAddress}\n"
     . "User agent: {$userAgent}\n";
 
 $headers = [
-    'From: RoofLink Website <no-reply@rooflinknetwork.example>',
-    'Reply-To: ' . ($email !== '' ? $email : 'no-reply@rooflinknetwork.example'),
+    'From: RoofLink Website <no-reply@rooflinknetwork.com>',
+    'Reply-To: ' . ($email !== '' ? $email : 'no-reply@rooflinknetwork.com'),
     'Content-Type: text/plain; charset=UTF-8',
 ];
 
